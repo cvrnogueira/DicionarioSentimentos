@@ -6,7 +6,8 @@ public class HashTable
 {
 
 		private HashTable1[] hashTable;
-		private final static int SIZE = 54702;
+		private static int SIZE = 900;
+		private static int NUMBOFKEYS = 0;
 
 		public HashTable(){
 			hashTable = new HashTable1[SIZE];
@@ -28,6 +29,22 @@ public class HashTable
 			
 
 		}
+		public void setSize(int size){
+			SIZE = size;
+		}
+		public boolean isRehashNeeded(){
+			System.out.println(NUMBOFKEYS/SIZE);
+			if(NUMBOFKEYS/SIZE >= 8 ){
+				rehash();
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		public void resetNumbOfKeys(){
+			NUMBOFKEYS = 0;
+		}
 
 		/* put
 		*  input: string word and int score to be inserted
@@ -48,6 +65,11 @@ public class HashTable
 			  		}
 			  		
 			  	}
+			  	boolean answer = isRehashNeeded();
+			  	if(answer == true){
+			  	System.out.println(answer);
+			  	}
+			  	NUMBOFKEYS++;
 		}
 			  	
 			  	
@@ -79,11 +101,22 @@ public class HashTable
 	            }
 
 		   }
-}
+
 		/*
-		*TODO: temos de faze ro rehash, ou seja, se chegam em 50% de ocupação ele faz o rehash
+		*TODO: temos de fazer o rehash, ou seja, se chegam em 50% de ocupação ele faz o rehash e o rehash pra quando n ta mto ocupado
 		*/
-
-
-
+		  public void rehash(){
+			  int oldSize = SIZE;
+			  HashTable1[] oldHashTable = hashTable;
+			  resetNumbOfKeys();
+			  setSize(oldSize*2);
+			  HashTable newHashTable =  new HashTable();
+			  for (int i = 0; i < oldSize; i++){
+				  if(oldHashTable[i] != null){ //Tenho de oercorrer a lista encadeada agr pra ir colocando no novo array 
+					  newHashTable.put(oldHashTable[i].getWord(), oldHashTable[i].getValue()); 
+				  }
+			  }
+			  
+		  }  
+}
 

@@ -38,6 +38,7 @@ public class GlobalMembers
 			    	}
 			    }
 			  } 
+			
 		}
 		catch (IOException x) {
 			 System.err.format("Erro de E/S: %s%n", x);
