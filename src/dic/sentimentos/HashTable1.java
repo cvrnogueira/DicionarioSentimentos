@@ -31,10 +31,18 @@ public class HashTable1 {
 	public String getWord() {
         return word;
      }
+	public ArrayList<Integer> returnTweetsList(){
+		return this.idTweets;
+	}
+	public void addTweet(int tweetIndex){
+		 this.idTweets.add(tweetIndex);
+	 }
 	public LinkedList<HashTable1> returnList(){
 		return this.colisions;
 	}
-
+	 public void add(HashTable1 hashTable1) {
+			this.colisions.add(hashTable1);	
+	}
 	public int getValue() {
         return value;
     } 
@@ -53,9 +61,7 @@ public class HashTable1 {
 	 public void setTotalScore(int score){
 		totalScore+=score;
 	 }
-	 public void add(HashTable1 hashTable1) {
-		this.colisions.add(hashTable1);	
-	}
+	
 	 @Override
 	 public String toString() {
 		return (" === key é: " + this.getKey() + "\n ==== [" + "value é" +  "] "  + this.getValue() +  "\n ==== [" + "Total value é" +  "] "  + this.getTotalScore() + "\n ==== Word é " + this.getWord() 
