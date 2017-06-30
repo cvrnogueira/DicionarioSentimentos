@@ -8,33 +8,26 @@ public class HashTable1 {
     private String word;
     private int value;
     private int totalScore;
-//    private boolean ocupado = false;
-//    private boolean usado = false;
-    private static int numAppearances= 0;
+    private int numAppearances= 0;
     LinkedList<HashTable1> colisions;
 
+    public HashTable1(){
+    	colisions = new LinkedList<>();
+    }
     
 	public HashTable1(int key, int value, String word){
 		this.key = key;
 		this.value = value;
 		this.word = word;
 		this.totalScore = value;
-//		this.setUsado(); //se tem alguem ali, no momento
-//		this.setOcupado(); //se algum dia já foi ou se está com alguem ali
-		numAppearances = 1;
-		colisions = new LinkedList<>();
+		this.numAppearances = 1;
 	}
-	
-
 	public int getKey() {
         return key;
      }
 	public String getWord() {
         return word;
      }
-//	public void addColision(HashTable1 tweet){
-//		this.colisions.add(tweet);
-//	}
 	public LinkedList<HashTable1> returnList(){
 		return this.colisions;
 	}
@@ -43,26 +36,28 @@ public class HashTable1 {
         return value;
     } 
 	public void incAppearances(){
-		numAppearances++;
+		this.numAppearances +=1;
 	}
-//	public boolean getUsado(){
-//		return usado;
-//	}
-//	public boolean getOcupado(){
-//		return ocupado;
-//	}
-//	public void setOcupado(){
-//		this.ocupado = true;
-//	}
-//	public void setUsado(){
-//		this.usado = true;
-//	}
-	public void setTotalScore(int score){
+	 public void setValue(int value) {
+         this.value = this.totalScore/this.numAppearances;
+	 }
+	 public int getNumAppearances(){
+		 return this.numAppearances;
+	 }
+	 public double getTotalScore(){
+		 return this.totalScore;
+	 }
+	 public void setTotalScore(int score){
 		totalScore+=score;
+	 }
+	 public void add(HashTable1 hashTable1) {
+		this.colisions.add(hashTable1);	
 	}
-	@Override
-	public String toString() {
-		return key + " [" + value+  "]";
+	 @Override
+	 public String toString() {
+		return ("=== key é: " + this.getKey() + "\n ==== [" + "value é" +  "] "  + this.getValue() +  "\n ==== [" + "Total value é" +  "] "  + this.getTotalScore() + "\n ==== Word é " + this.getWord() 
+		+ "\n ====  foi usada em : "  + this.getNumAppearances());
 	}
+
  
 }

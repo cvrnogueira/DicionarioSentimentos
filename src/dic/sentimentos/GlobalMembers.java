@@ -14,7 +14,7 @@ public class GlobalMembers
 	public static void main(String args[]){
 		
 		HashTable table = new HashTable();//create hash table
-	 
+	 int coutt=0;
 		Path path1 = Paths.get("pt.csv");
 		try (BufferedReader reader = Files.newBufferedReader(path1, Charset.forName("utf8"))) {
 			String line = null;
@@ -30,8 +30,11 @@ public class GlobalMembers
 			    	word = Normalizer.normalize(word, Normalizer.Form.NFD);
 			    	word = word.replaceAll("[^a-zA-Z\\s]", "").replaceAll("\\s+", " ");
 			    	if(word.length() > 2){
-			    	//table.put(word, score);
-			    		System.out.println(word + " " + score);
+			    	table.put(word, score);
+			    	if(word.equals("nova")){
+			    		coutt++;
+			    	}
+			    		//System.out.println(word + " " + score);
 			    	}
 			    }
 			  } 
@@ -40,10 +43,8 @@ public class GlobalMembers
 			 System.err.format("Erro de E/S: %s%n", x);
 		}
 		
-//		String keyASerInserida = "bananana98ijskslskj";
-//		int key= 0;
-//		boolean result = table.getValueFromKey("bananana98ijskslskj");
-//		
-//		System.out.println(result); // ta dando true sempre
+		HashTable1 result = table.getValueFromKey("nova");
+		
+		System.out.println(result + " -> countador é -> " + coutt); 
 	}
 }
