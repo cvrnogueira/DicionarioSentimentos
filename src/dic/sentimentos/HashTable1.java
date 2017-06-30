@@ -55,8 +55,8 @@ public class HashTable1 {
 	}
 	 @Override
 	 public String toString() {
-		return ("=== key é: " + this.getKey() + "\n ==== [" + "value é" +  "] "  + this.getValue() +  "\n ==== [" + "Total value é" +  "] "  + this.getTotalScore() + "\n ==== Word é " + this.getWord() 
-		+ "\n ====  foi usada em : "  + this.getNumAppearances());
+		return (" === key é: " + this.getKey() + "\n ==== [" + "value é" +  "] "  + this.getValue() +  "\n ==== [" + "Total value é" +  "] "  + this.getTotalScore() + "\n ==== Word é " + this.getWord() 
+		+ "\n ==== Apareceu "  + this.getNumAppearances() + " vezes \n");
 	}
 
  
