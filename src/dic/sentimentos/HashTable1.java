@@ -1,5 +1,6 @@
 package dic.sentimentos;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class HashTable1 {
@@ -10,6 +11,7 @@ public class HashTable1 {
     private int totalScore;
     private int numAppearances= 0;
     LinkedList<HashTable1> colisions;
+    ArrayList<Integer> idTweets;
 
     public HashTable1(){
     	colisions = new LinkedList<>();
@@ -21,6 +23,7 @@ public class HashTable1 {
 		this.word = word;
 		this.totalScore = value;
 		this.numAppearances = 1;
+		this.idTweets= new ArrayList();
 	}
 	public int getKey() {
         return key;
