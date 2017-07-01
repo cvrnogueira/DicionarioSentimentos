@@ -87,6 +87,9 @@ public class GlobalMembers
 	public static void daLau(InvertedIndex escoresHMap, HashTable table){
 		
 		//nao consegui buscar um scanf no stackoverflow entao coloquei um exempl de entrada pra testar mesmo!
+		String palavraTeste = new String();
+		Integer escoreTeste = 0;
+		LinkedList<Integer> tweets  = new LinkedList(); //vai armazenar a intersecao entre os indexes da palavra e os do escore
 		
 		
 		Scanner terminalInput = new Scanner(System.in);
@@ -94,56 +97,81 @@ public class GlobalMembers
 		//read input
 		
 		String inputWord = terminalInput.nextLine();
-		System.out.println("Por favor, digite o escore que deseja procurar, caso nao queira, ponha 9: ");
-		//Integer  = System.in.read();
-		Scanner in = new Scanner(System.in);
-		int inputScore = in.nextInt();
-       
-            //System.out.print("You entered ");
-            //System.out.println(inChar);
-        
+		palavraTeste = inputWord;
 		
-		String palavraTeste = inputWord;
-		Integer escoreTeste = inputScore;
-		LinkedList<Integer> tweets  = new LinkedList(); //vai armazenar a intersecao entre os indexes da palavra e os do escore
-		
-		
-		//aqui to fazendo vendo os tweets que estao nos dois
-		
-		
-		if (escoresHMap.getValueFromKey(escoreTeste) == null) {
-			tweets = table.getValueFromKey(palavraTeste).returnTweetList();
+		System.out.println("Deseja pesquisar um escore? 1 - sim. 0 - nao:");
+		int op = terminalInput.nextInt();
+		if (op == 1){
+			System.out.println("Digite seu escore: ");
+			int inputScore = terminalInput.nextInt ();
+			escoreTeste = inputScore;
 			
-			searchListOfTweets (tweets);
+			System.out.println ("escoreTeste = " +  escoreTeste);
+			if (escoresHMap.getValueFromKey(escoreTeste) == null) {
+				//tweets = table.getValueFromKey(palavraTeste).returnTweetList();
+				System.out.println(escoresHMap.)
+				System.out.println("Nao ha tweets com esse escore!");
+				//searchListOfTweets (tweets);
+			}
+			else {
+				
+				if (table.getValueFromKey(palavraTeste) == null) {
+					//tweets = escoresHMap.get1(escoreTeste);
+					
+					System.out.print("Nao ha tweets com essa palavra!");
+				}
+				else {
+					
+					for(Integer tweetIndexTeste: escoresHMap.getValueFromKey(escoreTeste).returnTweetsList())
+					{
+						
+						
+						if (table.getValueFromKey(palavraTeste).returnTweetList().contains(tweetIndexTeste)){
+							tweets.add(tweetIndexTeste);
+							
+						}
+					}
+					
+					searchListOfTweets (tweets);
+					//vai catar no arquivo
+					
+					
+				}
+				
+			
+			
+			}	
+			
+			
 		}
-		else {
+		else{
 			
 			if (table.getValueFromKey(palavraTeste) == null) {
 				//tweets = escoresHMap.get1(escoreTeste);
 				
 				System.out.print("Nao ha tweets com essa palavra!");
 			}
-			else {
-				
-				for(Integer tweetIndexTeste: escoresHMap.getValueFromKey(escoreTeste).returnTweetsList())
-				{
-					
-					
-					if (table.getValueFromKey(palavraTeste).returnTweetList().contains(tweetIndexTeste)){
-						tweets.add(tweetIndexTeste);
-						
-					}
-				}
-				
-				searchListOfTweets (tweets);
-				//vai catar no arquivo
-				
-				
+			else{
+			
+			tweets = table.getValueFromKey(palavraTeste).returnTweetList();
+			searchListOfTweets (tweets);
 			}
 			
+		}
+		
+		//Scanner in = new Scanner(System.in);
+		
+       
+            //System.out.print("You entered ");
+            //System.out.println(inChar);
+        
 		
 		
-		}	
+		
+		//aqui to fazendo vendo os tweets que estao nos dois
+		
+		
+		
 		//==============================================
 	}
 	
