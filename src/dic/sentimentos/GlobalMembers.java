@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class GlobalMembers
@@ -82,24 +83,77 @@ public class GlobalMembers
 	
 	///=====================da lau
 	
+
 	public static void daLau(InvertedIndex escoresHMap, HashTable table){
 		
 		//nao consegui buscar um scanf no stackoverflow entao coloquei um exempl de entrada pra testar mesmo!
 		
-		String palavraTeste = "samsung";
-		Integer escoreTeste = 0;
-		ArrayList<Integer> tweets  = new ArrayList(); //vai armazenar a intersecao entre os indexes da palavra e os do escore
+		
+		Scanner terminalInput = new Scanner(System.in);
+		System.out.println("Por favor, digite a palavra que deseja procurar: ");
+		//read input
+		
+		String inputWord = terminalInput.nextLine();
+		System.out.println("Por favor, digite o escore que deseja procurar, caso nao queira, ponha 9: ");
+		//Integer  = System.in.read();
+		Scanner in = new Scanner(System.in);
+		int inputScore = in.nextInt();
+       
+            //System.out.print("You entered ");
+            //System.out.println(inChar);
+        
+		
+		String palavraTeste = inputWord;
+		Integer escoreTeste = inputScore;
+		LinkedList<Integer> tweets  = new LinkedList(); //vai armazenar a intersecao entre os indexes da palavra e os do escore
 		
 		
 		//aqui to fazendo vendo os tweets que estao nos dois
-		for(Integer tweetIndexTeste: escoresHMap.getValueFromKey(escoreTeste).returnTweetsList())
-		{
-			if (table.getValueFromKey(palavraTeste).returnTweetList().contains(tweetIndexTeste)){
-				tweets.add(tweetIndexTeste);
+		
+		
+		if (escoresHMap.getValueFromKey(escoreTeste) == null) {
+			tweets = table.getValueFromKey(palavraTeste).returnTweetList();
+			
+			searchListOfTweets (tweets);
+		}
+		else {
+			
+			if (table.getValueFromKey(palavraTeste) == null) {
+				//tweets = escoresHMap.get1(escoreTeste);
+				
+				System.out.print("Nao ha tweets com essa palavra!");
+			}
+			else {
+				
+				for(Integer tweetIndexTeste: escoresHMap.getValueFromKey(escoreTeste).returnTweetsList())
+				{
+					
+					
+					if (table.getValueFromKey(palavraTeste).returnTweetList().contains(tweetIndexTeste)){
+						tweets.add(tweetIndexTeste);
+						
+					}
+				}
+				
+				searchListOfTweets (tweets);
+				//vai catar no arquivo
+				
 				
 			}
-		}
+			
+		
+		
+		}	
+		//==============================================
+	}
+	
+	
+	public static void searchListOfTweets(LinkedList tweets){
+		
+
 		System.out.println("======= Início do teste da Lau=====");
+		
+		System.out.println("Num de tweets = " + tweets.size());
 		System.out.println(tweets);
 		
 		
@@ -140,11 +194,5 @@ public class GlobalMembers
 		catch (IOException x) {
 			 System.err.format("Erro de E/S: %s%n", x);
 		}
-		
-		
-		
-		
-		
-		//==============================================
 	}
 }
