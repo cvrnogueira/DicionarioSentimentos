@@ -31,22 +31,9 @@ public class GlobalMembers
 				String finalLine = sc.next(); //linha sem o peso
 			    score = sc.nextInt(); // peso
 			    
-			    //=======================lau
-				//Aqui eu checko se eu ja salvei esse novo escore no tweet
-				// se sim, soh dou apend na lista de tweets dele com esse novo tweet
-				
-			    if (escoresHMap.returnHash().containsKey(score)){
-			    	escoresHMap.add(score, tweetIndex);
-			    	//System.out.println (escoresHMap.get(score));
-			    }
-			    
-			    //se nao, eu salvo, com uma lista de 1 elemento soh
-			    else{
-			    	ArrayList<Integer> TweetList = new ArrayList<Integer>();
-			    	TweetList.add(tweetIndex);
-			    	escoresHMap.returnHash().put(score, TweetList);
-			    }
-			    
+			    //=======================lau		
+				   escoresHMap.put(score, tweetIndex);
+		   
 			    //===============================end 
 			    Scanner sc2 = new Scanner(finalLine).useDelimiter(" "); //identify all individual strings
 			    while(sc2.hasNext()){
@@ -57,13 +44,17 @@ public class GlobalMembers
 			    	table.put(word, score);
 			    	
 			    	//=====================da lau
-			    		HashTable1 a = table.getValueFromKey(word);
-			    		if(a.returnTweetsList().contains(tweetIndex)){ //n pode ser contains aqui, temos d eimplementar né
-			    			a.addTweet(tweetIndex);
+
+			    		if (table.getValueFromKey(word).returnList() !=null){
+			    			if(!(table.getValueFromKey(word).returnList().contains(tweetIndex))){
+			    				table.getValueFromKey(word).addTweet(tweetIndex);
+			    			}
 			    		}
-				    	else {
-				    		table.getValueFromKey(word).addTweet(tweetIndex);
-				    	}
+			    		else{
+			    			table.getValueFromKey(word).addTweet(tweetIndex);
+			    		}
+			    					    		
+
 			    	//===========================
 			    	
 			    	if(word.equals("samsung")){
@@ -101,9 +92,9 @@ public class GlobalMembers
 		
 		
 		//aqui to fazendo vendo os tweets que estao nos dois
-		for(Integer tweetIndexTeste: escoresHMap.get1(escoreTeste))
+		for(Integer tweetIndexTeste: escoresHMap.getValueFromKey(escoreTeste).returnTweetsList())
 		{
-			if (table.getValueFromKey(palavraTeste).returnTweetsList().contains(tweetIndexTeste)){
+			if (table.getValueFromKey(palavraTeste).returnTweetList().contains(tweetIndexTeste)){
 				tweets.add(tweetIndexTeste);
 				
 			}

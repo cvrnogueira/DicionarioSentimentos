@@ -10,8 +10,8 @@ public class HashTable1 {
     private int value;
     private int totalScore;
     private int numAppearances= 0;
-    LinkedList<HashTable1> colisions;
-    ArrayList<Integer> idTweets;
+    private LinkedList<HashTable1> colisions;
+    private LinkedList<Integer> tweetList;
 
     public HashTable1(){
     	colisions = new LinkedList<>();
@@ -23,7 +23,7 @@ public class HashTable1 {
 		this.word = word;
 		this.totalScore = value;
 		this.numAppearances = 1;
-		this.idTweets= new ArrayList();
+		tweetList =  new LinkedList<Integer>();
 	}
 	public int getKey() {
         return key;
@@ -31,16 +31,17 @@ public class HashTable1 {
 	public String getWord() {
         return word;
      }
-	public ArrayList<Integer> returnTweetsList(){
-		return this.idTweets;
-	}
 	public void addTweet(int tweetIndex){
-		 this.idTweets.add(tweetIndex);
-	 }
+		this.tweetList.add(tweetIndex);
+		
+	}
+	public LinkedList<Integer> returnTweetList(){
+		return this.tweetList;
+	}
 	public LinkedList<HashTable1> returnList(){
 		return this.colisions;
 	}
-	 public void add(HashTable1 hashTable1) {
+	public void add(HashTable1 hashTable1) {
 			this.colisions.add(hashTable1);	
 	}
 	public int getValue() {
