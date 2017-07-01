@@ -5,6 +5,7 @@ import java.util.LinkedList;
 public class HashTable
 {
 
+	//todo: getListaDeTweets pela key
 		private HashTable1[] hashTable;
 		private static int SIZE = 12647; //prime number
 		private static int NUMBOFKEYS = 0;

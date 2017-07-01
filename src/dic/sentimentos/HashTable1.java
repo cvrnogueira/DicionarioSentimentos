@@ -31,6 +31,9 @@ public class HashTable1 {
 	public String getWord() {
         return word;
      }
+	public void addId(int tweetIndex){
+		idTweets.add(tweetIndex);
+	}
 	public LinkedList<HashTable1> returnList(){
 		return this.colisions;
 	}

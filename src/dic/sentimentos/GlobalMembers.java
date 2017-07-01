@@ -66,6 +66,7 @@ public class GlobalMembers
 			    	// se ta, dou append desse novo tweet. o if a mais ali eh pra ver se a lista ja tem esse index
 			    	// pra evitar casos em que a pessoa digite samsung samsung samsung dai iria slavar 3x o mesmo index
 			    		
+			    	
 			    	if (hmap.keySet().contains(word)){
 			    		if (!(hmap.get(word).contains(tweetIndex))){
 			    			hmap.get(word).add(tweetIndex);
