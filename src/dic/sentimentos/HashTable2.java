@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class HashTable2 {
 
 	
-	 	private int key;
+	 	private String key;
 	    private int id;
 	    LinkedList<HashTable2> colisions;
 	    private LinkedList<Integer> idTweets;
@@ -14,12 +14,12 @@ public class HashTable2 {
 	    	colisions = new LinkedList<>();
 	    }
 	    
-		public HashTable2(int key, int id){
+		public HashTable2(String key, int id){
 			this.key = key;
 			this.id = id;
 			idTweets= new LinkedList<>();
 		}
-		public int getKey() {
+		public String getKey() {
 	        return key;
 	     }
 		public int getId() {

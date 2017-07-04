@@ -17,8 +17,10 @@ public class GlobalMembers
 	public static void main(String args[]){
 		
 		HashTable table = new HashTable();//create hash table
-	//===================da lau	
-		InvertedIndex escoresHMap = new InvertedIndex();
+	//===================arquivos invertidos
+		InvertedIndex minusOne = new InvertedIndex(-1);
+		InvertedIndex zero = new InvertedIndex(0);
+		InvertedIndex one = new InvertedIndex(1);
 		Integer tweetIndex = 0;
 	//===================== end
 	 int countParaTeste=0;
@@ -32,10 +34,7 @@ public class GlobalMembers
 				String finalLine = sc.next(); //linha sem o peso
 			    score = sc.nextInt(); // peso
 			    
-			    //=======================lau		
-				   escoresHMap.put(score, tweetIndex);
-		   
-			    //===============================end 
+			    
 			    Scanner sc2 = new Scanner(finalLine).useDelimiter(" "); //identify all individual strings
 			    while(sc2.hasNext()){
 			    	word = sc2.next().toLowerCase();
@@ -43,30 +42,41 @@ public class GlobalMembers
 			    	word = word.replaceAll("[^a-zA-Z\\s]", "").replaceAll("\\s+", " ");
 			    	if(word.length() > 2){
 			    	table.put(word, score);
-			    	
-			    	//=====================da lau
+			    	 //=======================arquivos invertidos	
+			    	switch(score){
+				    	case -1: {
+				    		minusOne.put(word, tweetIndex);
+				    	}
+				    	break;
+				    	case 1: {
+				    	 	one.put(word, tweetIndex);
+				    	}
+				    	break;
+				    	case 0: {
+				    		 zero.put(word, tweetIndex);
+				    	}
+				    	break;
+				    }
 
-			    		if (table.getValueFromKey(word).returnList() !=null){
+			    	if (table.getValueFromKey(word).returnList() !=null){
 			    			if(!(table.getValueFromKey(word).returnList().contains(tweetIndex))){
 			    				table.getValueFromKey(word).addTweet(tweetIndex);
 			    			}
-			    		}
-			    		else{
+			    	}
+			    	else{
 			    			table.getValueFromKey(word).addTweet(tweetIndex);
-			    		}
+			    	}
 			    					    		
 
-			    	//===========================
-			    	
-			    	if(word.equals("samsung")){
-			    		countParaTeste++;
-			    	}
-			    		//System.out.println(word + " " + score);
-			    	}
+			    	//===========================end
+						    	
+						    	if(word.equals("samsung")){
+						    		countParaTeste++;
+						    	}
 			    }
+			  }
 			    tweetIndex = tweetIndex + 1;
-			  } 
-			
+			} 
 		}
 		catch (IOException x) {
 			 System.err.format("Erro de E/S: %s%n", x);
@@ -78,13 +88,13 @@ public class GlobalMembers
 		System.out.println(result + " -> countador é -> " + countParaTeste); 
 		System.out.println("======= Fim do teste da cata=====");
 		
-	daLau(escoresHMap, table); //aqui que eu chamo tua funcção de busca, lau!
+	daLau(minusOne, zero, one, table); //aqui que eu chamo tua funcção de busca, lau!
 	}
 	
 	///=====================da lau
 	
 
-	public static void daLau(InvertedIndex escoresHMap, HashTable table){
+	public static void daLau(InvertedIndex minusOne,InvertedIndex zero, InvertedIndex one, HashTable table){
 		
 		//nao consegui buscar um scanf no stackoverflow entao coloquei um exempl de entrada pra testar mesmo!
 		String palavraTeste = new String();
@@ -93,6 +103,7 @@ public class GlobalMembers
 		
 		
 		Scanner terminalInput = new Scanner(System.in);
+		String hashName= null;
 		System.out.println("Por favor, digite a palavra que deseja procurar: ");
 		//read input
 		
@@ -101,82 +112,57 @@ public class GlobalMembers
 		
 		System.out.println("Deseja pesquisar um escore? 1 - sim. 0 - nao:");
 		int op = terminalInput.nextInt();
-		if (op == 1){
+		if (op == 1){ 
 			System.out.println("Digite seu escore: ");
 			int inputScore = terminalInput.nextInt ();
-			escoreTeste = inputScore;
-			
-			System.out.println ("escoreTeste = " +  escoreTeste);
-			if (escoresHMap.getValueFromKey(escoreTeste) == null) {
-				//tweets = table.getValueFromKey(palavraTeste).returnTweetList();
-				System.out.println(escoresHMap.)
-				System.out.println("Nao ha tweets com esse escore!");
-				//searchListOfTweets (tweets);
-			}
-			else {
-				
-				if (table.getValueFromKey(palavraTeste) == null) {
-					//tweets = escoresHMap.get1(escoreTeste);
-					
-					System.out.print("Nao ha tweets com essa palavra!");
+
+			switch(inputScore){
+	    	case -1: {
+	    		if(minusOne.getValueFromKey(palavraTeste) == null){
+					System.out.println("Nao ha tweets com essa palavra nesse escore!");
 				}
-				else {
-					
-					for(Integer tweetIndexTeste: escoresHMap.getValueFromKey(escoreTeste).returnTweetsList())
-					{
-						
-						
-						if (table.getValueFromKey(palavraTeste).returnTweetList().contains(tweetIndexTeste)){
-							tweets.add(tweetIndexTeste);
-							
-						}
-					}
-					
-					searchListOfTweets (tweets);
-					//vai catar no arquivo
-					
-					
+				else if(minusOne.getValueFromKey(palavraTeste).returnTweetsList() ==null){
+					System.out.println("Nao ha tweets com esse escore!");
 				}
-				
+				else{
+					searchListOfTweets (minusOne.getValueFromKey(palavraTeste).returnTweetsList());
+				}
+	    	}
+	    	break;
+	    	case 1: {
+	    		if(one.getValueFromKey(palavraTeste) == null){
+					System.out.println("Nao ha tweets com essa palavra nesse escore!");
+				}
+				else if(one.getValueFromKey(palavraTeste).returnTweetsList() ==null){
+					System.out.println("Nao ha tweets com esse escore!");
+				}
+				else{
+					searchListOfTweets (one.getValueFromKey(palavraTeste).returnTweetsList());
+				}
+	    	}
+	    	break;
+	    	case 0: {
+	    		if(zero.getValueFromKey(palavraTeste) == null){
+					System.out.println("Nao ha tweets com essa palavra nesse escore!");
+				}
+				else if(zero.getValueFromKey(palavraTeste).returnTweetsList() ==null){
+					System.out.println("Nao ha tweets com esse escore!");
+				}
+				else{
+					searchListOfTweets (zero.getValueFromKey(palavraTeste).returnTweetsList());
+				}
+	    	}
+	    	break;
+	    }
+
+	}	
 			
-			
-			}	
-			
-			
-		}
-		else{
-			
-			if (table.getValueFromKey(palavraTeste) == null) {
-				//tweets = escoresHMap.get1(escoreTeste);
-				
-				System.out.print("Nao ha tweets com essa palavra!");
-			}
-			else{
-			
-			tweets = table.getValueFromKey(palavraTeste).returnTweetList();
-			searchListOfTweets (tweets);
-			}
-			
-		}
-		
-		//Scanner in = new Scanner(System.in);
-		
-       
-            //System.out.print("You entered ");
-            //System.out.println(inChar);
-        
-		
-		
-		
-		//aqui to fazendo vendo os tweets que estao nos dois
-		
-		
+}
 		
 		//==============================================
-	}
 	
 	
-	public static void searchListOfTweets(LinkedList tweets){
+	public static void searchListOfTweets(LinkedList<Integer> tweets){
 		
 
 		System.out.println("======= Início do teste da Lau=====");
@@ -190,29 +176,22 @@ public class GlobalMembers
 		Path path2 = Paths.get("pt.csv");
 		try (BufferedReader reader = Files.newBufferedReader(path2, Charset.forName("utf8"))) {
 			String line = null;
-			int score = 0;
 			Integer tweetIndex = 0;
-			String word = null;
 			ArrayList <String> retorno = new ArrayList <String>();
 			while ((line = reader.readLine()) != null) {
 				
 				Scanner sc = new Scanner(line).useDelimiter(","); // separador é ,
 				String finalLine = sc.next(); //linha sem o peso
-				score = sc.nextInt(); // peso
-			    Scanner sc2 = new Scanner(finalLine).useDelimiter(" "); //identify all individual strings
+				sc.nextInt(); // peso
 			    
 			    //vejo se o index de agora eh algum dos que eu quero, se sim, dou append numa lista de retorno,
 			    //que vai ter todos os tweets que teem aquela palavra e mais aquele escore
 			    if (tweets.contains(tweetIndex)){
 			    	retorno.add(finalLine);
 			    }
-			    
-			    
 			    tweetIndex = tweetIndex + 1;
-			    
 			  } 
-			
-		//aqui to printando todos os tweets que tem escore 0 e conteem a palavra samsung!
+
 		for (String tweetRet: retorno){
 			System.out.println(tweetRet);
 		}

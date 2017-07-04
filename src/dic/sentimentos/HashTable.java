@@ -26,8 +26,6 @@ public class HashTable
 			else{
 				return (keyASerInserida.hashCode() % SIZE * -1); // Calculate the rest of key's division by prime number 151, returning it as hash index.
 			}
-			
-
 		}
 		public void setSize(int size){
 			SIZE = size;
