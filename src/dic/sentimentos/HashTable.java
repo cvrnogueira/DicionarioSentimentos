@@ -1,12 +1,18 @@
 package dic.sentimentos;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 
 public class HashTable
 {
 
 		private HashTable1[] hashTable;
-		private static int SIZE = 12647; //prime number
+		private static int SIZE = 1240; //prime number
 		private static int NUMBOFKEYS = 0;
 
 		public HashTable(){
@@ -27,6 +33,7 @@ public class HashTable
 				return (keyASerInserida.hashCode() % SIZE * -1); // Calculate the rest of key's division by prime number 151, returning it as hash index.
 			}
 		}
+
 		public void setSize(int size){
 			SIZE = size;
 		}
@@ -51,15 +58,19 @@ public class HashTable
 		*   if not, create a new Entry and push it on the list at the
 		*   appropriate array index
 		*/
+
 		public void put(String keyASerInserida, int score){
+		
 			  int keyASerInseridaComoInt = computeHash(keyASerInserida);
-			  
-			  	if(hashTable[keyASerInseridaComoInt] == null){ //add a new node in the linkedList
+			 
+			  	if(hashTable[keyASerInseridaComoInt].returnList().isEmpty()){ //add a new node in the linkedList
 			  		hashTable[keyASerInseridaComoInt].add(new HashTable1(keyASerInseridaComoInt, score, keyASerInserida));
+			  		
 			  	}
 			  	else { //collision has happened, so values have to be reset
 			  		if(!(checkIfCollision( keyASerInserida,  score,  keyASerInseridaComoInt))){
 			  			hashTable[keyASerInseridaComoInt].add(new HashTable1(keyASerInseridaComoInt, score, keyASerInserida)); //if there was no collision, it will add a new node at the end of the linked list
+			  			
 			  		}
 			  		
 			  	}
@@ -98,6 +109,36 @@ public class HashTable
 	                  return null; //if does the key is not in the liked list of keys it does not exist
 	            }
 
+		   }
+		   public String giveWordOfList(int i){
+			   System.out.println(hashTable[i]);
+			   return hashTable[i].giveWordOfList(i);
+		   }
+		   public LinkedList<HashTable1> getValueFromInt(int num){
+			   return hashTable[num].returnList();
+		   }
+		   
+		 
+		   public void salvaEmArquivo(){
+				HashTable hashTable2 = this;
+				Path path2 = Paths.get("dados.rtf");
+				try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path2, Charset.forName("utf8")))) {
+					   //writer.format("%s;%s;%s%n", s.getWord(), p.getData(), p.getCPF());
+					 for(int i =0; i< SIZE; i++){
+						
+						  for(int j =i; j<hashTable2.getValueFromInt(i).size();j++){ //itera pela lista de colisoes me dando a palavra
+							
+								// System.out.println(hashTable2.giveWordOfList(j)); 
+						
+								  
+							  
+						  }
+						  //System.out.println("======");
+					 } 
+				}
+				catch (IOException x) {
+				  System.err.format("Erro de E/S: %s%n", x);
+				}
 		   }
 
 		/*

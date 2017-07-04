@@ -26,10 +26,10 @@ public class HashTable1 {
 		tweetList =  new LinkedList<Integer>();
 	}
 	public int getKey() {
-        return key;
+        return this.key;
      }
 	public String getWord() {
-        return word;
+        return this.word;
      }
 	public void addTweet(int tweetIndex){
 		this.tweetList.add(tweetIndex);
@@ -49,6 +49,12 @@ public class HashTable1 {
     } 
 	public void incAppearances(){
 		this.numAppearances +=1;
+	}
+	public String giveWordOfList(int j){
+		if(this.colisions != null){
+			return this.colisions.get(j).getWord();
+		}
+		else return null;
 	}
 	 public void setValue(int value) {
          this.value = this.totalScore/this.numAppearances;

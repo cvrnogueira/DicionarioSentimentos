@@ -2,6 +2,7 @@ package dic.sentimentos;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,8 +33,7 @@ public class GlobalMembers
 				Scanner sc = new Scanner(line).useDelimiter(","); // separador é ,
 				String finalLine = sc.next(); //linha sem o peso
 			    score = sc.nextInt(); // peso
-			    
-			    
+			   
 			    Scanner sc2 = new Scanner(finalLine).useDelimiter(" "); //identify all individual strings
 			    while(sc2.hasNext()){
 			    	word = sc2.next().toLowerCase();
@@ -80,6 +80,9 @@ public class GlobalMembers
 		catch (IOException x) {
 			 System.err.format("Erro de E/S: %s%n", x);
 		}
+		
+		//SALVA DICIONARIO EM ARQUIVO
+		table.salvaEmArquivo();
 		
 		//-----------------------PARA TESTES---------------------
 		HashTable1 result = table.getValueFromKey("samsung");
