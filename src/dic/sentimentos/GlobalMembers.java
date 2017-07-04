@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -155,10 +154,19 @@ public class GlobalMembers
 	    	break;
 	    }
 
-	}	
+	}
+	else{
 			
-}
-		
+		if (table.getValueFromKey(palavraTeste) == null) {
+			
+			System.out.print("Nao ha tweets com essa palavra!");
+		}
+		else{
+			tweets = table.getValueFromKey(palavraTeste).returnTweetList();
+			searchListOfTweets (tweets);
+			}
+		}
+	}
 		//==============================================
 	
 	
