@@ -334,7 +334,6 @@ public class JanelaFX extends Application {
 						vbox.setPadding(new Insets(46));
 						dialogStage.setScene(new Scene(vbox));
 						dialogStage.show();
-
 					}
 				}
 				else {

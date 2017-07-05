@@ -8,6 +8,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class HashTable
 {
@@ -178,7 +185,13 @@ public class HashTable
 						}
 					}
 					catch (IOException x) {
-						System.err.format("Erro de E/S: %s%n", x);
+						Stage dialogStage = new Stage();
+						dialogStage.initModality(Modality.WINDOW_MODAL);
+						VBox vbox = new VBox(new Text("Erro de E/S: " +  x));
+						vbox.setAlignment(Pos.CENTER);
+						vbox.setPadding(new Insets(46));
+						dialogStage.setScene(new Scene(vbox));
+						dialogStage.show();
 					}
 				}
 				else if(op.equals("newFile")){
@@ -190,7 +203,13 @@ public class HashTable
 						}
 					}
 					catch (IOException x) {
-						System.err.format("Erro de E/S: %s%n", x);
+						Stage dialogStage = new Stage();
+						dialogStage.initModality(Modality.WINDOW_MODAL);
+						VBox vbox = new VBox(new Text("Erro de E/S: " +  x));
+						vbox.setAlignment(Pos.CENTER);
+						vbox.setPadding(new Insets(46));
+						dialogStage.setScene(new Scene(vbox));
+						dialogStage.show();
 					}
 				}
 			  }

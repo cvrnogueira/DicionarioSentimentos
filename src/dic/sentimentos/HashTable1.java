@@ -1,6 +1,6 @@
 package dic.sentimentos;
 
-import java.util.ArrayList;
+
 import java.util.LinkedList;
 
 public class HashTable1 {
