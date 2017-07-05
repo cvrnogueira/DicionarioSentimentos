@@ -6,60 +6,37 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class HashTable
 {
 
 		private HashTable1[] hashTable;
 		private static int SIZE = 1249; //prime number
-		private static int NUMBOFKEYS = 0;
 
 		public HashTable(){
 			hashTable = new HashTable1[SIZE];
 	            for (int i = 0; i < SIZE; i++)
-	            	hashTable[i] = new HashTable1(); //cada indice do array agora tem uma lista encadeada
+	            	hashTable[i] = new HashTable1(); //every index now have a linked List
 			}
 		/* computeHash
 		*  return an integer based on the input string
 		*  used for index into the array in hash table
-		*  TODO: esse valor do size, não sei qual a gente usaria, temos de pensar
 		*/
 		private int computeHash(String keyASerInserida){
 			if(keyASerInserida.hashCode() % SIZE > 0){
 				return keyASerInserida.hashCode() % SIZE;
 			}
 			else{
-				return (keyASerInserida.hashCode() % SIZE * -1); // Calculate the rest of key's division by prime number 151, returning it as hash index.
+				return (keyASerInserida.hashCode() % SIZE * -1); // Calculate the rest of key's division by prime number 1249, returning it as hash index.
 			}
 		}
-		private HashTable1 a(int a){
+		private HashTable1 returnHashTable(int a){
 			return hashTable[a];
 		}
 
 		public void setSize(int size){
 			SIZE = size;
-		}
-//		public boolean isRehashNeeded(){
-//			System.out.println(NUMBOFKEYS/SIZE);
-//			if(NUMBOFKEYS/SIZE >= 8 ){
-//				rehash();
-//				return true;
-//			}
-//			else{
-//				return false;
-//			}
-//		}
-		public void resetNumbOfKeys(){
-			NUMBOFKEYS = 0;
 		}
 
 		/* put
@@ -86,11 +63,6 @@ public class HashTable
 			  		}
 			  		
 			  	}
-//			  	boolean answer = isRehashNeeded();
-//			  	if(answer == true){
-//			  	System.out.println(answer);
-//			  	}
-			  	NUMBOFKEYS++;
 		}
 			  	
 			  	
@@ -156,11 +128,11 @@ public class HashTable
 				
 				for(int i =0; i< SIZE; i++){
 					 temp = 0;
-					 if(hashTable2.a(i).returnList().isEmpty()){
+					 if(hashTable2.returnHashTable(i).returnList().isEmpty()){
 						 o++;
 					 }
 					
-					for(HashTable1 entry: hashTable2.a(i).returnList()){
+					for(HashTable1 entry: hashTable2.returnHashTable(i).returnList()){
 							temp++;
 							total++;
 					}
@@ -178,7 +150,7 @@ public class HashTable
 			if(Files.exists(path2)) {
 					try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path2, Charset.forName("utf8")))) {
 						for(int i =0; i< SIZE; i++){
-							for(HashTable1 entry: hashTable2.a(i).returnList()){
+							for(HashTable1 entry: hashTable2.returnHashTable(i).returnList()){
 								writer.format("Chave= %s; Valor= %s; Escore Total= %s; Número de vezes em que aparece= %s%n",entry.getWord(), entry.getValue(), entry.getTotalScore(), entry.getNumAppearances());
 							}
 						}
@@ -193,25 +165,6 @@ public class HashTable
 				return ("Esse arquivo nao existe!"); 
 			}
 		   }
-		  
-
 		   
-
-		/*
-		*TODO: temos de fazer o rehash, ou seja, se chegam em 50% de ocupação ele faz o rehash e o rehash pra quando n ta mto ocupado
-		*/
-//		  public void rehash(){
-//			  int oldSize = SIZE;
-//			  HashTable1[] oldHashTable = hashTable;
-//			  resetNumbOfKeys();
-//			  setSize(oldSize*2);
-//			  HashTable newHashTable =  new HashTable();
-//			  for (int i = 0; i < oldSize; i++){
-//				  if(oldHashTable[i] != null){ //Tenho de oercorrer a lista encadeada agr pra ir colocando no novo array 
-//					  newHashTable.put(oldHashTable[i].getWord(), oldHashTable[i].getValue()); 
-//				  }
-//			  }
-//			  
-//		  }  
 }
 

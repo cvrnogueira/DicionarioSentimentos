@@ -34,8 +34,6 @@ import javafx.scene.control.TextArea;
 
 public class JanelaFX extends Application {
 
-	private ComboBox<String> consulta02;
-	private TextField consulta02Arquivo;
 	private ComboBox<String> consulta04;
 	private TextField consulta04Palavra;
 	private static TextArea textArea;
@@ -51,8 +49,7 @@ public class JanelaFX extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
-
+		
 		setup();
 		textArea = new TextArea();
 
@@ -100,9 +97,6 @@ public class JanelaFX extends Application {
 
 		});
 		//-------consulta 02
-		
-		
-
 		btnConsulta2.setOnAction(e -> {
 			String selectedFileName = null;
 			FileChooser fileChooser = new FileChooser();
@@ -270,7 +264,7 @@ public class JanelaFX extends Application {
 
 		Integer tweetIndex2 = 0;
 		Path path3 = Paths.get(selectedFileName);
-		Path path4 = Paths.get("novo.txt");
+		Path path4 = Paths.get("novso.txt");
 		int soma = 0;
 		try (BufferedReader reader = Files.newBufferedReader(path3, Charset.forName("utf8"))) {
 			String line = null;
@@ -323,7 +317,7 @@ public class JanelaFX extends Application {
 			}
 			Stage dialogStage = new Stage();
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-			VBox vbox = new VBox(new Text("Salvo em novo arquivo de nome novo.txt!"));
+			VBox vbox = new VBox(new Text("Salvo em novo arquivo de nome novso.txt!"));
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(46));
 			dialogStage.setScene(new Scene(vbox));
@@ -400,7 +394,7 @@ public class JanelaFX extends Application {
 		else{
 
 			if (table.getValueFromKey(inputWord) == null) {
-				textArea.setText("Nao ha tweets com essa palavra! " +inputWord );
+				textArea.setText("Nao ha tweets com essa palavra:  " +inputWord );
 			}
 			else{
 				tweets = table.getValueFromKey(inputWord).returnTweetList();
