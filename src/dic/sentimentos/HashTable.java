@@ -1,6 +1,5 @@
 package dic.sentimentos;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;

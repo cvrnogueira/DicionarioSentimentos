@@ -17,6 +17,7 @@ import java.util.Scanner;
 import javafx.scene.control.TextField;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,21 +27,25 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class JanelaFX extends Application {
 
@@ -51,6 +56,8 @@ public class JanelaFX extends Application {
 	private ComboBox<String> consulta02;
 	private ComboBox<String> consulta04;
 	private TextField consulta04Palavra;
+	private TextArea textareaShowPreview;
+	private static TextArea textArea;
 	Window stage = null;
 
 	Scanner scanner = new Scanner(System.in);
@@ -66,8 +73,7 @@ public class JanelaFX extends Application {
 		
 		
 		setup();
-	
-    
+		 textArea = new TextArea();
 
 		BorderPane pane = new BorderPane();
 		pane.setStyle("-fx-background-color: #1abc9c;");
@@ -105,14 +111,14 @@ public class JanelaFX extends Application {
 			File selectedFile= fileChooser.showOpenDialog(stage);
 			if (selectedFile != null) {
 				selectedFileName = selectedFile.getName();
+				consulta01(selectedFileName);
 			}
 			else {
 				fileChooser.setTitle("Erro ao selecionar o arquivo");
 			}
 
-			consulta01(selectedFileName);
+			
 		});
-		//----------------------------
 		//-------consulta 02
 		consulta02 = new ComboBox<String>(FXCollections.observableArrayList(options));
 		consulta02.setStyle("-fx-background-color:#ecf0f1");
@@ -120,8 +126,6 @@ public class JanelaFX extends Application {
 		btnConsulta2.setOnAction(e -> {
 			consulta02();
 		});
-		//----------------------------
-
 		//-------consulta 03
 
 		btnConsulta3.setOnAction(e -> {
@@ -131,16 +135,12 @@ public class JanelaFX extends Application {
 			File selectedFile= fileChooser.showOpenDialog(stage);
 			if (selectedFile != null) {
 				selectedFileName = selectedFile.getName();
+				consulta03(selectedFileName);
 			}
 			else {
 				fileChooser.setTitle("Erro ao selecionar o arquivo");
 			}
-
-			consulta03(selectedFileName);
 		});
-		//----------------------------
-
-
 		//-------consulta 04
 		
 		consulta04 = new ComboBox<String>(FXCollections.observableArrayList(options2));
@@ -159,8 +159,21 @@ public class JanelaFX extends Application {
 		});
 		//----------------------------
 
+		
+		 VBox root = new VBox();
+	        root.setPadding(new Insets(10));
+	        root.setSpacing(5);
+	        
+	        root.getChildren().add(new Label("Output consulta04:"));
+	 
+	        
+	        root.getChildren().add(textArea);
+	 
+	       
+	        
+	        
 		pane.setLeft(leftPane);
-
+		pane.setBottom(root);
 		Scene scene = new Scene(pane, 500, 500);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Dicionario de sentimentos");
@@ -318,7 +331,6 @@ public class JanelaFX extends Application {
 
 		InvertedIndex newPolaridade = new InvertedIndex();
 		Integer tweetIndex2 = 0;
-		System.out.println("Seu arquivo será salvo no de nome novo.txt");
 		Path path3 = Paths.get(selectedFileName);
 		Path path4 = Paths.get("novo.txt");
 		int soma = 0;
@@ -348,6 +360,7 @@ public class JanelaFX extends Application {
 					}
 					catch (IOException x) {
 						System.err.format("Erro de E/S: %s%n", x);
+						
 					}
 				}
 				else {
@@ -392,7 +405,8 @@ public class JanelaFX extends Application {
 
 	public void consulta04() {
 
-
+		
+	
 		String inputWord = consulta04Palavra.getText();
 		String terminalInput =  (String) consulta04.getSelectionModel().getSelectedItem();
 
@@ -408,10 +422,10 @@ public class JanelaFX extends Application {
 			switch(terminalInput2){
 			case -1: {
 				if(minusOne.getValueFromKey(inputWord) == null){
-					System.out.println("Nao ha tweets com essa palavra nesse escore!");
+					textArea.setText("Nao ha tweets com essa palavra " + inputWord + "nesse escore: -1");
 				}
 				else if(minusOne.getValueFromKey(inputWord).returnTweetsList() ==null){
-					System.out.println("Nao ha tweets com esse escore!");
+					textArea.setText("Nao ha tweets com esse escore " + -1);
 				}
 				else{
 					searchListOfTweets (minusOne.getValueFromKey(inputWord).returnTweetsList());
@@ -420,10 +434,10 @@ public class JanelaFX extends Application {
 			break;
 			case 1: {
 				if(one.getValueFromKey(inputWord) == null){
-					System.out.println("Nao ha tweets com essa palavra nesse escore!");
+					textArea.setText("Nao ha tweets com essa palavra " + inputWord + "nesse escore: 1");
 				}
 				else if(one.getValueFromKey(inputWord).returnTweetsList() ==null){
-					System.out.println("Nao ha tweets com esse escore!");
+					textArea.setText("Nao ha tweets com esse escore " + 1);
 				}
 				else{
 					searchListOfTweets (one.getValueFromKey(inputWord).returnTweetsList());
@@ -432,10 +446,10 @@ public class JanelaFX extends Application {
 			break;
 			case 0: {
 				if(zero.getValueFromKey(inputWord) == null){
-					System.out.println("Nao ha tweets com essa palavra nesse escore!");
+					textArea.setText("Nao ha tweets com essa palavra " + inputWord + "nesse escore: 0");
 				}
 				else if(zero.getValueFromKey(inputWord).returnTweetsList() ==null){
-					System.out.println("Nao ha tweets com esse escore!");
+					textArea.setText("Nao ha tweets com esse escore: 0");
 				}
 				else{
 					searchListOfTweets (zero.getValueFromKey(inputWord).returnTweetsList());
@@ -448,8 +462,7 @@ public class JanelaFX extends Application {
 		else{
 
 			if (table.getValueFromKey(inputWord) == null) {
-
-				System.out.print("Nao ha tweets com essa palavra!");
+				textArea.setText("Nao ha tweets com essa palavra! " +inputWord );
 			}
 			else{
 				tweets = table.getValueFromKey(inputWord).returnTweetList();
@@ -460,9 +473,15 @@ public class JanelaFX extends Application {
 
 	public static void searchListOfTweets(LinkedList<Integer> tweets){
 
+		
 
-		System.out.println("Num de tweets = " + tweets.size());
-		System.out.println(tweets);
+		 textArea.appendText("\n");
+		 textArea.appendText("[");
+		for (Integer t: tweets){
+			textArea.appendText(" " + t);	 
+		}
+		textArea.appendText("]");
+		textArea.appendText("\n");
 
 
 		Path path2 = Paths.get("pt.csv");
@@ -483,10 +502,14 @@ public class JanelaFX extends Application {
 				}
 				tweetIndex = tweetIndex + 1;
 			} 
-
+		
 			for (String tweetRet: retorno){
-				System.out.println(tweetRet);
+				textArea.appendText(tweetRet);
+                textArea.appendText("\n");
+				 
 			}
+		
+	
 
 		}
 		catch (IOException x) {
