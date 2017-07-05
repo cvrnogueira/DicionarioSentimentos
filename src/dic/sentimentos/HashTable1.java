@@ -68,6 +68,10 @@ public class HashTable1 {
 	 public void setTotalScore(int score){
 		totalScore+=score;
 	 }
+	 public double getAcummulateScore(){
+		 
+		 return this.getTotalScore()/this.getNumAppearances();
+	 }
 	
 	 @Override
 	 public String toString() {

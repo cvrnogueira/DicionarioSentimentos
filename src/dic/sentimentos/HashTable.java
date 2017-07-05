@@ -33,6 +33,9 @@ public class HashTable
 				return (keyASerInserida.hashCode() % SIZE * -1); // Calculate the rest of key's division by prime number 151, returning it as hash index.
 			}
 		}
+		private HashTable1 a(int a){
+			return hashTable[a];
+		}
 
 		public void setSize(int size){
 			SIZE = size;
@@ -65,6 +68,7 @@ public class HashTable
 			 
 			  	if(hashTable[keyASerInseridaComoInt].returnList().isEmpty()){ //add a new node in the linkedList
 			  		hashTable[keyASerInseridaComoInt].add(new HashTable1(keyASerInseridaComoInt, score, keyASerInserida));
+			  		
 			  		
 			  	}
 			  	else { //collision has happened, so values have to be reset
@@ -102,6 +106,7 @@ public class HashTable
 	                  return null;
 	            else {
 	                  for(HashTable1 colisao: hashTable[keyASerInseridaComoInt].returnList()){ //check if a collision have happend, so it will search in the linked list associated to the key generated my computeHas()
+	                	
 	                	  if(colisao.getWord().equals(keyASerBuscada)){
 	                		  return colisao;
 	                	  }
@@ -118,23 +123,56 @@ public class HashTable
 			   return hashTable[num].returnList();
 		   }
 		   
+		   
+		  	
+			public boolean checkIfCollision2(String keyASerInserida, int score, int keyASerInseridaComoInt){
+				for(HashTable1 entry: hashTable[keyASerInseridaComoInt].returnList()){
+		  			if (entry.getWord().equals(keyASerInserida)){
+		  	      		entry.setValue(score);
+		  	      		entry.incAppearances();
+		  	      		entry.setTotalScore(score);
+		  	      		return true;
+		  	      	}
+		  		}
+				return false;
+			}
+			
+		   
+		 public void testaTamanho(){
+			 HashTable hashTable2 = this;
+		 
+			 	int maior = 0;
+				int temp = 0;
+				int o =0;
+				int total = 0;
+				
+				for(int i =0; i< SIZE; i++){
+					 temp = 0;
+					 if(hashTable2.a(i).returnList().isEmpty()){
+						 o++;
+					 }
+					
+					for(HashTable1 entry: hashTable2.a(i).returnList()){
+							temp++;
+							total++;
+					}
+
+					if(temp > maior){
+						maior = temp;
+					}
+				}
+		 }
 		 
 		   public void salvaEmArquivo(){
 				HashTable hashTable2 = this;
 				Path path2 = Paths.get("dados.rtf");
+
 				try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path2, Charset.forName("utf8")))) {
-					   //writer.format("%s;%s;%s%n", s.getWord(), p.getData(), p.getCPF());
 					 for(int i =0; i< SIZE; i++){
-						
-						  for(int j =i; j<hashTable2.getValueFromInt(i).size();j++){ //itera pela lista de colisoes me dando a palavra
-							
-								// System.out.println(hashTable2.giveWordOfList(j)); 
-						
-								  
-							  
-						  }
-						  //System.out.println("======");
-					 } 
+							for(HashTable1 entry: hashTable2.a(i).returnList()){
+								   writer.format("Chave= %s; Valor= %s; Escore Total= %s; Número de vezes em que aparece= %s%n",entry.getWord(), entry.getValue(), entry.getTotalScore(), entry.getNumAppearances());
+							}
+					 }
 				}
 				catch (IOException x) {
 				  System.err.format("Erro de E/S: %s%n", x);

@@ -26,7 +26,7 @@ public class InvertedIndex {
 	public void put(String keyASerInserida, int id){
 		  int keyASerInseridaComoInt = computeHash(keyASerInserida);
 
-		  	if(escoresHMap[keyASerInseridaComoInt] == null){ //add a new node in the linkedList
+		  	if(escoresHMap[keyASerInseridaComoInt].returnList().isEmpty()){ //add a new node in the linkedList
 		  		escoresHMap[keyASerInseridaComoInt].add(new HashTable2(keyASerInserida, id));
 		  	
 		  	}
