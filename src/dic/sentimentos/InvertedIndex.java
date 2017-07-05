@@ -15,6 +15,11 @@ public class InvertedIndex {
 	        for (int i = 0; i < SIZE; i++)
 	        	escoresHMap[i] = new HashTable2(); //cada indice do array agora tem uma lista encadeada
 	}
+	public InvertedIndex(){
+		escoresHMap = new HashTable2[SIZE];
+        for (int i = 0; i < SIZE; i++)
+        	escoresHMap[i] = new HashTable2(); //cada indice do array agora tem uma lista encadeada
+}
 	private int computeHash(String keyASerInserida){
 		if(keyASerInserida.hashCode() % SIZE > 0){
 			return keyASerInserida.hashCode() % SIZE;

@@ -6,6 +6,7 @@ public class HashTable2 {
 
 	
 	 	private String key;
+	 	private int key2;
 	    private int id;
 	    LinkedList<HashTable2> colisions;
 	    private LinkedList<Integer> idTweets;

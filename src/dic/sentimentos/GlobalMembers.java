@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -36,7 +37,7 @@ public class GlobalMembers
 			switch(op){
 			case 01: {
 				System.out.println("Nome do arquivo ou deseja usar o default?(ta usando o default)");
-				 int countParaTeste=0;
+//				 int countParaTeste=0;
 					Path path1 = Paths.get("pt.csv");
 					try (BufferedReader reader = Files.newBufferedReader(path1, Charset.forName("utf8"))) {
 						String line = null;
@@ -101,6 +102,7 @@ public class GlobalMembers
 			}
 			break;
 			case 02:{
+				
 				System.out.println("Nome do arquivo ou deseja fazer um append no já existente?(escreve newFile ou append)");
 				scanner.nextLine();	
 				String inputWord = scanner.nextLine();
@@ -117,8 +119,59 @@ public class GlobalMembers
 			}
 			break;
 			case 03:{
-				System.out.println("Seu arquivo será salvo no de nome blabla.txt");
+				InvertedIndex newPolaridade = new InvertedIndex();
+				Integer tweetIndex2 = 0;
+				System.out.println("Seu arquivo será salvo no de nome novo.txt");
+				Path path3 = Paths.get("teste.txt");
+				Path path4 = Paths.get("novo.txt");
+				int soma = 0;
+				try (BufferedReader reader = Files.newBufferedReader(path3, Charset.forName("utf8"))) {
+					String line = null;
+					int score = 0;
+					String word = null;
+					while ((line = reader.readLine()) != null) {
+						Scanner sc = new Scanner(line);
+						String finalLine = sc.next();
+						
+					    Scanner sc2 = new Scanner(finalLine).useDelimiter(" "); //identify all individual strings
+					    soma = 0;
+					    while(sc2.hasNext()){
+					    	word = sc2.next().toLowerCase();
+					    	word = Normalizer.normalize(word, Normalizer.Form.NFD);
+					    	word = word.replaceAll("[^a-zA-Z\\s]", "").replaceAll("\\s+", " ");
+					    	if(word.length() > 2){
+					    		if(table.getValueFromKey(word) != null ){
+					    			soma +=table.getValueFromKey(word).getTotalScore();
+					    		}
+					    	}
+					    }
+					    if(tweetIndex2 == 0){
+					    	try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path4, Charset.forName("utf8")))) {
+								writer.format(" %s;,%s%n",line, soma);
+							}
+							catch (IOException x) {
+								System.err.format("Erro de E/S: %s%n", x);
+							}
+					    }
+					    else {
+					    	try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path4, Charset.forName("utf8"), StandardOpenOption.APPEND))) {
+								writer.format(" %s;,%s%n",line, soma);
+								}
+								catch (IOException x) {
+									System.err.format("Erro de E/S: %s%n", x);
+								}
+					    }
+					  //escreve o tweet e a polaridade no arquivo
+					    tweetIndex2 = tweetIndex2 + 1;
+					}
+					    
+					} 
+				catch (IOException x) {
+					 System.err.format("Erro de E/S: %s%n", x);
+				}
+				
 			}
+			break;
 			case 04: {
 				daLau(minusOne, zero, one, table);
 			}
@@ -148,14 +201,16 @@ public class GlobalMembers
 		System.out.println("Por favor, digite a palavra que deseja procurar: ");
 		
 		String inputWord = terminalInput.nextLine();
+		inputWord = Normalizer.normalize(inputWord, Normalizer.Form.NFD);
+		inputWord = inputWord.replaceAll("[^a-zA-Z\\s]", "").replaceAll("\\s+", " ");
+		inputWord = inputWord.toLowerCase();
 		palavraTeste = inputWord;
-		
 		System.out.println("Deseja pesquisar um escore? 1 - sim. 0 - nao:");
 		int op = terminalInput.nextInt();
 		if (op == 1){ 
 			System.out.println("Digite seu escore: ");
 			int inputScore = terminalInput.nextInt ();
-
+			
 			switch(inputScore){
 	    	case -1: {
 	    		if(minusOne.getValueFromKey(palavraTeste) == null){
