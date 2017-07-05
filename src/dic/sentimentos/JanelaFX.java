@@ -287,7 +287,7 @@ public class JanelaFX extends Application {
 				}
 				if(tweetIndex2 == 0){
 					try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path4, Charset.forName("utf8")))) {
-						writer.format(" %s;,%s%n",line, soma);
+						writer.format(" %s,%s%n",line, soma);
 					}
 					catch (IOException x) {
 						Stage dialogStage = new Stage();
@@ -301,7 +301,7 @@ public class JanelaFX extends Application {
 				}
 				else {
 					try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path4, Charset.forName("utf8"), StandardOpenOption.APPEND))) {
-						writer.format(" %s;,%s%n",line, soma);
+						writer.format(" %s,%s%n",line, soma);
 					}
 					catch (IOException x) {
 						Stage dialogStage = new Stage();
