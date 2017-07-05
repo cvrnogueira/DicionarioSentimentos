@@ -82,7 +82,7 @@ public class GlobalMembers
 		}
 		
 		//SALVA DICIONARIO EM ARQUIVO
-		table.salvaEmArquivo();
+		table.salvaEmArquivo("newFile");
 		
 		//-----------------------PARA TESTES---------------------
 		HashTable1 result = table.getValueFromKey("samsung");

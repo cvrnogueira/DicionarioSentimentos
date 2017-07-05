@@ -1,11 +1,13 @@
 package dic.sentimentos;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 
 public class HashTable
@@ -163,20 +165,39 @@ public class HashTable
 				}
 		 }
 		 
-		   public void salvaEmArquivo(){
-				HashTable hashTable2 = this;
-				Path path2 = Paths.get("dados.rtf");
-
-				try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path2, Charset.forName("utf8")))) {
-					 for(int i =0; i< SIZE; i++){
+		   public void salvaEmArquivo(String op){//append em caso de append e newFile em caso de overwrite
+			   
+			HashTable hashTable2 = this;
+			Path path2 = Paths.get("dados.rtf");
+			if(Files.exists(path2)) {
+				if(op.equals("append")){
+					try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path2, Charset.forName("utf8"), StandardOpenOption.APPEND))) {
+						for(int i =0; i< SIZE; i++){
 							for(HashTable1 entry: hashTable2.a(i).returnList()){
-								   writer.format("Chave= %s; Valor= %s; Escore Total= %s; Número de vezes em que aparece= %s%n",entry.getWord(), entry.getValue(), entry.getTotalScore(), entry.getNumAppearances());
+								writer.format("Chave= %s; Valor= %s; Escore Total= %s; Número de vezes em que aparece= %s%n",entry.getWord(), entry.getValue(), entry.getTotalScore(), entry.getNumAppearances());
 							}
-					 }
+						}
+					}
+					catch (IOException x) {
+						System.err.format("Erro de E/S: %s%n", x);
+					}
 				}
-				catch (IOException x) {
-				  System.err.format("Erro de E/S: %s%n", x);
+				else if(op.equals("newFile")){
+					try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path2, Charset.forName("utf8")))) {
+						for(int i =0; i< SIZE; i++){
+							for(HashTable1 entry: hashTable2.a(i).returnList()){
+								writer.format("Chave= %s; Valor= %s; Escore Total= %s; Número de vezes em que aparece= %s%n",entry.getWord(), entry.getValue(), entry.getTotalScore(), entry.getNumAppearances());
+							}
+						}
+					}
+					catch (IOException x) {
+						System.err.format("Erro de E/S: %s%n", x);
+					}
 				}
+			  }
+			else{
+				System.out.println("Esse arquivo nao existe!");
+			}
 		   }
 
 		/*
