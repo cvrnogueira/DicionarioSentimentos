@@ -16,89 +16,128 @@ public class GlobalMembers
 {
 	public static void main(String args[]){
 		
+		Scanner scanner = new Scanner(System.in);
 		HashTable table = new HashTable();//create hash table
-	//===================arquivos invertidos
+		//===================arquivos invertidos
 		InvertedIndex minusOne = new InvertedIndex(-1);
 		InvertedIndex zero = new InvertedIndex(0);
 		InvertedIndex one = new InvertedIndex(1);
 		Integer tweetIndex = 0;
-	//===================== end
-	 int countParaTeste=0;
-		Path path1 = Paths.get("pt.csv");
-		try (BufferedReader reader = Files.newBufferedReader(path1, Charset.forName("utf8"))) {
-			String line = null;
-			int score = 0;
-			String word = null;
-			while ((line = reader.readLine()) != null) {
-				Scanner sc = new Scanner(line).useDelimiter(","); // separador é ,
-				String finalLine = sc.next(); //linha sem o peso
-			    score = sc.nextInt(); // peso
-			   
-			    Scanner sc2 = new Scanner(finalLine).useDelimiter(" "); //identify all individual strings
-			    while(sc2.hasNext()){
-			    	word = sc2.next().toLowerCase();
-			    	word = Normalizer.normalize(word, Normalizer.Form.NFD);
-			    	word = word.replaceAll("[^a-zA-Z\\s]", "").replaceAll("\\s+", " ");
-			    	if(word.length() > 2){
-			    	table.put(word, score);
-			    	 //=======================arquivos invertidos	
-			    	switch(score){
-				    	case -1: {
-				    		minusOne.put(word, tweetIndex);
-				    	}
-				    	break;
-				    	case 1: {
-				    	 	one.put(word, tweetIndex);
-				    	}
-				    	break;
-				    	case 0: {
-				    		 zero.put(word, tweetIndex);
-				    	}
-				    	break;
-				    }
+		//===================== end
+		
+		boolean stay = false;
+		do{
+			System.out.println("O que deseja fazer?");
+			System.out.println("Carregar arquivo ao dicionário digite 1");
+			System.out.println("Armazenar mais tweets aos existentes 2");
+			System.out.println("Determinar a polaridade de tweets 3");
+			System.out.println("funcionalidade adiconal 4");
+			int op = scanner.nextInt();
+			switch(op){
+			case 01: {
+				System.out.println("Nome do arquivo ou deseja usar o default?(ta usando o default)");
+				 int countParaTeste=0;
+					Path path1 = Paths.get("pt.csv");
+					try (BufferedReader reader = Files.newBufferedReader(path1, Charset.forName("utf8"))) {
+						String line = null;
+						int score = 0;
+						String word = null;
+						while ((line = reader.readLine()) != null) {
+							Scanner sc = new Scanner(line).useDelimiter(","); // separador é ,
+							String finalLine = sc.next(); //linha sem o peso
+						    score = sc.nextInt(); // peso
+						   
+						    Scanner sc2 = new Scanner(finalLine).useDelimiter(" "); //identify all individual strings
+						    while(sc2.hasNext()){
+						    	word = sc2.next().toLowerCase();
+						    	word = Normalizer.normalize(word, Normalizer.Form.NFD);
+						    	word = word.replaceAll("[^a-zA-Z\\s]", "").replaceAll("\\s+", " ");
+						    	word = word.toLowerCase(); //reforce this ideia
+						    	if(word.length() > 2){
+						    	table.put(word, score);
+						    	 //=======================arquivos invertidos	
+						    	switch(score){
+							    	case -1: {
+							    		minusOne.put(word, tweetIndex);
+							    	}
+							    	break;
+							    	case 1: {
+							    	 	one.put(word, tweetIndex);
+							    	}
+							    	break;
+							    	case 0: {
+							    		 zero.put(word, tweetIndex);
+							    	}
+							    	break;
+							    	default: System.out.println("peso inválido");
+							    }
 
-			    	if (table.getValueFromKey(word).returnList() !=null){
-			    			if(!(table.getValueFromKey(word).returnList().contains(tweetIndex))){
-			    				table.getValueFromKey(word).addTweet(tweetIndex);
-			    			}
-			    	}
-			    	else{
-			    			table.getValueFromKey(word).addTweet(tweetIndex);
-			    	}
-			    					    		
-
-			    	//===========================end
-						    	
-						    	if(word.equals("samsung")){
-						    		countParaTeste++;
+						    	if (table.getValueFromKey(word).returnList() !=null){
+						    			if(!(table.getValueFromKey(word).returnList().contains(tweetIndex))){
+						    				table.getValueFromKey(word).addTweet(tweetIndex);
+						    			}
 						    	}
-			    }
-			  }
-			    tweetIndex = tweetIndex + 1;
-			} 
-		}
-		catch (IOException x) {
-			 System.err.format("Erro de E/S: %s%n", x);
-		}
+						    	else{
+						    			table.getValueFromKey(word).addTweet(tweetIndex);
+						    	}
+						    					    		
+									    	
+//									    	if(word.equals("samsung")){
+//									    		countParaTeste++;
+//									    	}
+						    }
+						  }
+						    tweetIndex = tweetIndex + 1;
+						} 
+					}
+					catch (IOException x) {
+						 System.err.format("Erro de E/S: %s%n", x);
+					}
+//					//-----------------------PARA TESTES---------------------
+//					HashTable1 result = table.getValueFromKey("samsung");
+//					System.out.println("======= Início do teste da cata=====");
+//					System.out.println(result + " -> countador é -> " + countParaTeste); 
+//					System.out.println("======= Fim do teste da cata=====");
+			}
+			break;
+			case 02:{
+				System.out.println("Nome do arquivo ou deseja fazer um append no já existente?(escreve newFile ou append)");
+				scanner.nextLine();	
+				String inputWord = scanner.nextLine();
+					
+					if(inputWord.equals("newFile")){
+						table.salvaEmArquivo("newFile");
+					}
+					else if(inputWord.equals("append")){
+						table.salvaEmArquivo("append");
+					}
+					else{
+						System.out.println("opcao Invalida");
+					}
+			}
+			break;
+			case 03:{
+				System.out.println("Seu arquivo será salvo no de nome blabla.txt");
+			}
+			case 04: {
+				daLau(minusOne, zero, one, table);
+			}
+			break;
+			default: System.out.println("No option");
+			}
+			System.out.println("again?(booleano true ou false)");
+			 stay = scanner.nextBoolean();
+		}while(stay);
 		
-		//SALVA DICIONARIO EM ARQUIVO
-		table.salvaEmArquivo("newFile");
+
 		
-		//-----------------------PARA TESTES---------------------
-		HashTable1 result = table.getValueFromKey("samsung");
-		System.out.println("======= Início do teste da cata=====");
-		System.out.println(result + " -> countador é -> " + countParaTeste); 
-		System.out.println("======= Fim do teste da cata=====");
-		
-	daLau(minusOne, zero, one, table); //aqui que eu chamo tua funcção de busca, lau!
+
 	}
 	
-	///=====================da lau
-	
 
+//FUNCIONALIDADE ADICONAL
 	public static void daLau(InvertedIndex minusOne,InvertedIndex zero, InvertedIndex one, HashTable table){
-		
-		//nao consegui buscar um scanf no stackoverflow entao coloquei um exempl de entrada pra testar mesmo!
+
 		String palavraTeste = new String();
 		Integer escoreTeste = 0;
 		LinkedList<Integer> tweets  = new LinkedList(); //vai armazenar a intersecao entre os indexes da palavra e os do escore
@@ -107,7 +146,6 @@ public class GlobalMembers
 		Scanner terminalInput = new Scanner(System.in);
 		String hashName= null;
 		System.out.println("Por favor, digite a palavra que deseja procurar: ");
-		//read input
 		
 		String inputWord = terminalInput.nextLine();
 		palavraTeste = inputWord;
@@ -170,19 +208,13 @@ public class GlobalMembers
 			}
 		}
 	}
-		//==============================================
-	
 	
 	public static void searchListOfTweets(LinkedList<Integer> tweets){
 		
-
-		System.out.println("======= Início do teste da Lau=====");
 		
 		System.out.println("Num de tweets = " + tweets.size());
 		System.out.println(tweets);
 		
-		
-		//vou abrir o arquivo pra prourar!
 		
 		Path path2 = Paths.get("pt.csv");
 		try (BufferedReader reader = Files.newBufferedReader(path2, Charset.forName("utf8"))) {
@@ -206,7 +238,6 @@ public class GlobalMembers
 		for (String tweetRet: retorno){
 			System.out.println(tweetRet);
 		}
-		System.out.println("======= Fim do teste da Lau=====");
 			
 		}
 		catch (IOException x) {
