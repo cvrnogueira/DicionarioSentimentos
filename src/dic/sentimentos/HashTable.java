@@ -20,7 +20,7 @@ public class HashTable
 {
 
 		private HashTable1[] hashTable;
-		private static int SIZE = 1240; //prime number
+		private static int SIZE = 1249; //prime number
 		private static int NUMBOFKEYS = 0;
 
 		public HashTable(){
@@ -171,52 +171,31 @@ public class HashTable
 				}
 		 }
 		 
-		   public void salvaEmArquivo(String op){//append em caso de append e newFile em caso de overwrite
+		  public String salvaEmArquivo(String inputFileName){
 			   
 			HashTable hashTable2 = this;
-			Path path2 = Paths.get("dados.rtf");
+			Path path2 = Paths.get(inputFileName);
 			if(Files.exists(path2)) {
-				if(op.equals("append")){
-					try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path2, Charset.forName("utf8"), StandardOpenOption.APPEND))) {
-						for(int i =0; i< SIZE; i++){
-							for(HashTable1 entry: hashTable2.a(i).returnList()){
-								writer.format("Chave= %s; Valor= %s; Escore Total= %s; Número de vezes em que aparece= %s%n",entry.getWord(), entry.getValue(), entry.getTotalScore(), entry.getNumAppearances());
-							}
-						}
-					}
-					catch (IOException x) {
-						Stage dialogStage = new Stage();
-						dialogStage.initModality(Modality.WINDOW_MODAL);
-						VBox vbox = new VBox(new Text("Erro de E/S: " +  x));
-						vbox.setAlignment(Pos.CENTER);
-						vbox.setPadding(new Insets(46));
-						dialogStage.setScene(new Scene(vbox));
-						dialogStage.show();
-					}
-				}
-				else if(op.equals("newFile")){
 					try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path2, Charset.forName("utf8")))) {
 						for(int i =0; i< SIZE; i++){
 							for(HashTable1 entry: hashTable2.a(i).returnList()){
 								writer.format("Chave= %s; Valor= %s; Escore Total= %s; Número de vezes em que aparece= %s%n",entry.getWord(), entry.getValue(), entry.getTotalScore(), entry.getNumAppearances());
 							}
 						}
+						return ("Salvo no arquivo " + inputFileName); 
 					}
 					catch (IOException x) {
-						Stage dialogStage = new Stage();
-						dialogStage.initModality(Modality.WINDOW_MODAL);
-						VBox vbox = new VBox(new Text("Erro de E/S: " +  x));
-						vbox.setAlignment(Pos.CENTER);
-						vbox.setPadding(new Insets(46));
-						dialogStage.setScene(new Scene(vbox));
-						dialogStage.show();
+						return ("Erro ao escrever no arquivo"); 
 					}
-				}
 			  }
 			else{
 				System.out.println("Esse arquivo nao existe!");
+				return ("Esse arquivo nao existe!"); 
 			}
 		   }
+		  
+
+		   
 
 		/*
 		*TODO: temos de fazer o rehash, ou seja, se chegam em 50% de ocupação ele faz o rehash e o rehash pra quando n ta mto ocupado

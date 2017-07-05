@@ -35,10 +35,10 @@ import javafx.scene.control.TextArea;
 public class JanelaFX extends Application {
 
 	private ComboBox<String> consulta02;
+	private TextField consulta02Arquivo;
 	private ComboBox<String> consulta04;
 	private TextField consulta04Palavra;
 	private static TextArea textArea;
-	private Stage dialogStage;
 	Window stage = null;
 
 	Scanner scanner = new Scanner(System.in);
@@ -82,7 +82,6 @@ public class JanelaFX extends Application {
 
 		String[] options = { "Novo Arquivo", "Append no existente"};
 		String[] options2 = { "-1", "0", "1"};
-		dialogStage = new Stage();
 
 
 		btnConsulta.setOnAction(e -> {
@@ -101,11 +100,21 @@ public class JanelaFX extends Application {
 
 		});
 		//-------consulta 02
-		consulta02 = new ComboBox<String>(FXCollections.observableArrayList(options));
-		consulta02.setStyle("-fx-background-color:#ecf0f1");
-		leftPane.add(consulta02, 1, 3);
+		
+		
+
 		btnConsulta2.setOnAction(e -> {
-			consulta02();
+			String selectedFileName = null;
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Open Resource File");
+			File selectedFile= fileChooser.showOpenDialog(stage);
+			if (selectedFile != null) {
+				selectedFileName = selectedFile.getName();
+				consulta02(selectedFileName);
+			}
+			else {
+				fileChooser.setTitle("Erro ao selecionar o arquivo");
+			}
 		});
 		//-------consulta 03
 
@@ -223,9 +232,10 @@ public class JanelaFX extends Application {
 				tweetIndex = tweetIndex + 1;
 			} 
 			
-			
+			String retorno = table.salvaEmArquivo("novo.txt");
+			Stage dialogStage = new Stage();
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-			VBox vbox = new VBox(new Text("Criado com Sucesso!"));
+			VBox vbox = new VBox(new Text(retorno));
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(45));
 			dialogStage.setScene(new Scene(vbox));
@@ -243,59 +253,18 @@ public class JanelaFX extends Application {
 
 	}
 
-	private void consulta02() {
-
-		String inputOption = (String) consulta02.getSelectionModel().getSelectedItem();
-		if(inputOption != null){   
-			if(inputOption.equals("Novo Arquivo")){
-				table.salvaEmArquivo("newFile");
-
+	private void consulta02(String selectedFile) {
+			if(selectedFile != null){
+				consulta01(selectedFile); //atualiza dicionario e salva no arquivo os novos
 				Stage dialogStage = new Stage();
 				dialogStage.initModality(Modality.WINDOW_MODAL);
-
-				VBox vbox = new VBox(new Text("Salvo em novo arquivo de nome dados.rtf!"));
+				VBox vbox = new VBox(new Text("Dicionario atualizado e arquivo também"));
 				vbox.setAlignment(Pos.CENTER);
 				vbox.setPadding(new Insets(46));
-
-				dialogStage.setScene(new Scene(vbox));
-				dialogStage.show();
-			}
-			else if(inputOption.equals("Append no existente")){
-				table.salvaEmArquivo("append");
-				Stage dialogStage = new Stage();
-				dialogStage.initModality(Modality.WINDOW_MODAL);
-
-				VBox vbox = new VBox(new Text("Append no arquivo de nome dados.rtf!"));
-				vbox.setAlignment(Pos.CENTER);
-				vbox.setPadding(new Insets(46));
-
-				dialogStage.setScene(new Scene(vbox));
-				dialogStage.show();
-			}
-			else{
-				Stage dialogStage = new Stage();
-				dialogStage.initModality(Modality.WINDOW_MODAL);
-
-				VBox vbox = new VBox(new Text("Opção inválida!"));
-				vbox.setAlignment(Pos.CENTER);
-				vbox.setPadding(new Insets(46));
-
 				dialogStage.setScene(new Scene(vbox));
 				dialogStage.show();
 			}
 		}
-		else{
-			Stage dialogStage = new Stage();
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			VBox vbox = new VBox(new Text("Escolha alguma opção!"));
-			vbox.setAlignment(Pos.CENTER);
-			vbox.setPadding(new Insets(46));
-			dialogStage.setScene(new Scene(vbox));
-			dialogStage.show();
-		}
-
-
-	}
 
 	public void consulta03(String selectedFileName) {
 

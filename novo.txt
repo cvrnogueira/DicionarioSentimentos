@@ -1,3 +1,28 @@
- Apple processa a Samsung no Japão - Notícias - TechTudo;,0
- Dizem que a coisa mais triste que o homem enfrentará;é o que poderia ter sido...;,0
- Se esta vadia falar alguma merda para mim Nossa eu rodo a baiana aqui hein;,0
+Chave= hein; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= triste; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= rodo; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= enfrentarae; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= mais; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= poderia; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= sido; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= alguma; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= vadia; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= esta; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= noticias; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= homem; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= mim; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= aqui; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= japao; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= coisa; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= processa; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= dizem; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= samsung; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= techtudo; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= merda; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= baiana; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= ter; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= falar; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= nossa; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= que; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 3
+Chave= para; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
+Chave= apple; Valor= 0; Escore Total= 0.0; Número de vezes em que aparece= 1
