@@ -38,6 +38,7 @@ public class JanelaFX extends Application {
 	private ComboBox<String> consulta04;
 	private TextField consulta04Palavra;
 	private static TextArea textArea;
+	private Stage dialogStage;
 	Window stage = null;
 
 	Scanner scanner = new Scanner(System.in);
@@ -81,7 +82,7 @@ public class JanelaFX extends Application {
 
 		String[] options = { "Novo Arquivo", "Append no existente"};
 		String[] options2 = { "-1", "0", "1"};
-
+		dialogStage = new Stage();
 
 
 		btnConsulta.setOnAction(e -> {
@@ -137,58 +138,45 @@ public class JanelaFX extends Application {
 		btnConsulta4.setOnAction(e -> {
 			consulta04();
 		});
-		//----------------------------
-
 
 		VBox root = new VBox();
 		root.setPadding(new Insets(10));
 		root.setSpacing(5);
-
 		root.getChildren().add(new Label("Output consulta04:"));
-
-
 		root.getChildren().add(textArea);
-
-
-
-
+		
 		pane.setLeft(leftPane);
 		pane.setBottom(root);
 		Scene scene = new Scene(pane, 500, 500);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Dicionario de sentimentos");
-
-
-
+		
 		primaryStage.show();
-
 	}
 
-	// Inicializando os dados aqui...
+	// Initializing data here
 	private void setup() throws IOException {
 
 		scanner = new Scanner(System.in);
-		table = new HashTable();//create hash table
-		//===================arquivos invertidos
+		table = new HashTable();
 		minusOne = new InvertedIndex(-1);
 		zero = new InvertedIndex(0);
 		one = new InvertedIndex(1);
 		tweetIndex = 0;
-		//===================== end
 	}
 
 
 	private void consulta01(String selectedFileName) {
 
-		Path path1 = Paths.get(selectedFileName); //p teste estamos usando o pt.csv
+		Path path1 = Paths.get(selectedFileName); //name of the file that user chooses is get here
 		try (BufferedReader reader = Files.newBufferedReader(path1, Charset.forName("utf8"))) {
 			String line = null;
 			int score = 0;
 			String word = null;
 			while ((line = reader.readLine()) != null) {
-				Scanner sc = new Scanner(line).useDelimiter(","); // separador é ,
-				String finalLine = sc.next(); //linha sem o peso
-				score = sc.nextInt(); // peso
+				Scanner sc = new Scanner(line).useDelimiter(","); //delimiter is a comma
+				String finalLine = sc.next(); //line without the value
+				score = sc.nextInt(); // value
 
 				Scanner sc2 = new Scanner(finalLine).useDelimiter(" "); //identify all individual strings
 				while(sc2.hasNext()){
@@ -211,7 +199,15 @@ public class JanelaFX extends Application {
 							zero.put(word, tweetIndex);
 						}
 						break;
-						default: System.out.println("peso inválido");
+						default: {
+							Stage dialogStage = new Stage();
+							dialogStage.initModality(Modality.WINDOW_MODAL);
+							VBox vbox = new VBox(new Text("Peso inválido!"));
+							vbox.setAlignment(Pos.CENTER);
+							vbox.setPadding(new Insets(46));
+							dialogStage.setScene(new Scene(vbox));
+							dialogStage.show();
+						}
 						}
 
 						if (table.getValueFromKey(word).returnList() !=null){
@@ -226,25 +222,21 @@ public class JanelaFX extends Application {
 				}
 				tweetIndex = tweetIndex + 1;
 			} 
-			Stage dialogStage = new Stage();
+			
+			
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-
 			VBox vbox = new VBox(new Text("Criado com Sucesso!"));
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(45));
-
 			dialogStage.setScene(new Scene(vbox));
 			dialogStage.show();
 		}
 		catch (IOException x) {
-			System.err.format("Erro de E/S: %s%n", x);
 			Stage dialogStage = new Stage();
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-
-			VBox vbox = new VBox(new Text("Erro!"));
+			VBox vbox = new VBox(new Text("Erro de E/S: " +  x));
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(46));
-
 			dialogStage.setScene(new Scene(vbox));
 			dialogStage.show();
 		}
@@ -295,11 +287,9 @@ public class JanelaFX extends Application {
 		else{
 			Stage dialogStage = new Stage();
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-
 			VBox vbox = new VBox(new Text("Escolha alguma opção!"));
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(46));
-
 			dialogStage.setScene(new Scene(vbox));
 			dialogStage.show();
 		}
@@ -337,7 +327,13 @@ public class JanelaFX extends Application {
 						writer.format(" %s;,%s%n",line, soma);
 					}
 					catch (IOException x) {
-						System.err.format("Erro de E/S: %s%n", x);
+						Stage dialogStage = new Stage();
+						dialogStage.initModality(Modality.WINDOW_MODAL);
+						VBox vbox = new VBox(new Text("Erro de E/S: " +  x));
+						vbox.setAlignment(Pos.CENTER);
+						vbox.setPadding(new Insets(46));
+						dialogStage.setScene(new Scene(vbox));
+						dialogStage.show();
 
 					}
 				}
@@ -346,32 +342,32 @@ public class JanelaFX extends Application {
 						writer.format(" %s;,%s%n",line, soma);
 					}
 					catch (IOException x) {
-						System.err.format("Erro de E/S: %s%n", x);
+						Stage dialogStage = new Stage();
+						dialogStage.initModality(Modality.WINDOW_MODAL);
+						VBox vbox = new VBox(new Text("Erro de E/S: " +  x));
+						vbox.setAlignment(Pos.CENTER);
+						vbox.setPadding(new Insets(46));
+						dialogStage.setScene(new Scene(vbox));
+						dialogStage.show();
 					}
 				}
-				//escreve o tweet e a polaridade no arquivo
 				tweetIndex2 = tweetIndex2 + 1;
 			}
 			Stage dialogStage = new Stage();
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-
 			VBox vbox = new VBox(new Text("Salvo em novo arquivo de nome novo.txt!"));
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(46));
-
 			dialogStage.setScene(new Scene(vbox));
 			dialogStage.show();
 
 		} 
 		catch (IOException x) {
-			System.err.format("Erro de E/S: %s%n", x);
 			Stage dialogStage = new Stage();
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-
-			VBox vbox = new VBox(new Text("Erro!"));
+			VBox vbox = new VBox(new Text("Erro de E/S: " +  x));
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(46));
-
 			dialogStage.setScene(new Scene(vbox));
 			dialogStage.show();
 		}
@@ -382,9 +378,6 @@ public class JanelaFX extends Application {
 
 
 	public void consulta04() {
-
-
-
 		String inputWord = consulta04Palavra.getText();
 		String terminalInput =  (String) consulta04.getSelectionModel().getSelectedItem();
 
@@ -488,7 +481,13 @@ public class JanelaFX extends Application {
 
 		}
 		catch (IOException x) {
-			System.err.format("Erro de E/S: %s%n", x);
+			Stage dialogStage = new Stage();
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			VBox vbox = new VBox(new Text("Erro de E/S: " +  x));
+			vbox.setAlignment(Pos.CENTER);
+			vbox.setPadding(new Insets(46));
+			dialogStage.setScene(new Scene(vbox));
+			dialogStage.show();
 		}
 	}
 
