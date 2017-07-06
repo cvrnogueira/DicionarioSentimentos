@@ -121,7 +121,7 @@ public class HashTable
 		 public void testaTamanho(){
 			 HashTable hashTable2 = this;
 		 
-			 	int maior = 0;
+			 	int maior = 0; //lista com maior tamanho
 				int temp = 0;
 				int o =0;
 				int total = 0;
