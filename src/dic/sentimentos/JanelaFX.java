@@ -264,19 +264,16 @@ public class JanelaFX extends Application {
 
 		Integer tweetIndex2 = 0;
 		Path path3 = Paths.get(selectedFileName);
-		Path path4 = Paths.get("novso.txt");
+		Path path4 = Paths.get("polaridadeNova.csv");
 		int soma = 0;
 		try (BufferedReader reader = Files.newBufferedReader(path3, Charset.forName("utf8"))) {
 			String line = null;
 			String word = null;
 			while ((line = reader.readLine()) != null) {
-				Scanner sc = new Scanner(line);
-				String finalLine = sc.next();
-
-				Scanner sc2 = new Scanner(finalLine).useDelimiter(" "); //identify all individual strings
+				Scanner sc = new Scanner(line).useDelimiter(" ");
 				soma = 0;
-				while(sc2.hasNext()){
-					word = sc2.next().toLowerCase();
+				while(sc.hasNext()){
+					word = sc.next().toLowerCase();
 					word = Normalizer.normalize(word, Normalizer.Form.NFD);
 					word = word.replaceAll("[^a-zA-Z\\s]", "").replaceAll("\\s+", " ");
 					if(word.length() > 2){
@@ -317,7 +314,7 @@ public class JanelaFX extends Application {
 			}
 			Stage dialogStage = new Stage();
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-			VBox vbox = new VBox(new Text("Salvo em novo arquivo de nome novso.txt!"));
+			VBox vbox = new VBox(new Text("Salvo em novo arquivo de nome polaridadeNova.csv!"));
 			vbox.setAlignment(Pos.CENTER);
 			vbox.setPadding(new Insets(46));
 			dialogStage.setScene(new Scene(vbox));
@@ -337,10 +334,9 @@ public class JanelaFX extends Application {
 	}
 
 
-
-
 	public void consulta04() {
 		String inputWord = consulta04Palavra.getText();
+		textArea.setText(" ");
 		String terminalInput =  (String) consulta04.getSelectionModel().getSelectedItem();
 
 		LinkedList<Integer> tweets  = new LinkedList(); //vai armazenar a intersecao entre os indexes da palavra e os do escore
