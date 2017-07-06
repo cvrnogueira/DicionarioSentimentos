@@ -298,6 +298,15 @@ public class JanelaFX extends Application {
 				}
 				else {
 					try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path4, Charset.forName("utf8"), StandardOpenOption.APPEND))) {
+						if(soma > 0.1){
+							soma = 1;
+						}
+						else if(soma < -0.1){
+							soma = -1;
+						}
+						else if(soma >= -0.1 && soma <= 0.1){
+							soma = 0;
+						}
 						writer.format(" %s,%s%n",line, soma);
 					}
 					catch (IOException x) {
